@@ -1,0 +1,33 @@
+---
+abstract: 'Lightweight ORMapper'
+author:
+  - 'Kazuhiro Oinuma C<< <oinume __at__ gmail.com> >>'
+build_requires:
+  DBD::SQLite: 1.14
+  ExtUtils::MakeMaker: 6.42
+  FindBin::libs: 0
+  Test::More: 0.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 0.91'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: DBIx-Thin
+no_index:
+  directory:
+    - inc
+    - t
+    - xt
+requires:
+  Class::Accessor: 0.25
+  DBI: 1.38
+  File::Basename: 0
+  File::Spec: 0
+  UNIVERSAL::require: 0
+  perl: 5.005
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01
