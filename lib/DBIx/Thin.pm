@@ -9,7 +9,7 @@ use DBIx::Thin::Driver;
 use DBIx::Thin::Schema;
 use DBIx::Thin::Utils qw(check_required_args);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub import {
     my ($class, %args) = @_;
@@ -864,9 +864,6 @@ ARGUMENTS
 RETURNS : sth object
 
 
-#--- ORM methods ---#
-
-
 =head2 find_by_pk($table, $pk)
 
 Returns a object of the table.
@@ -973,7 +970,7 @@ EXAMPLE
       order_by => [
           { id => 'DESC' }
       ],
-      options => { limit => 20 },
+      limit => 20,
   );
   while (my $user = $iterator->next) {
       print "id = ", $user->id, "\n";
