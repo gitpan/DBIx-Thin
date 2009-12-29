@@ -9,7 +9,7 @@ use DBIx::Thin::Driver;
 use DBIx::Thin::Schema;
 use DBIx::Thin::Utils qw(check_required_args);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub import {
     my ($class, %args) = @_;
@@ -804,40 +804,102 @@ DBIx::Thin - Lightweight ORMapper
  Your::Model->delete('user', 10);
 
 
+=head1 SUPPORTED DATABASE
+
+=over 4
+
+=item * SQLite
+
+=item * MySQL
+
+=item * PostgreSQL
+
+=back
+
+
 =head1 METHODS
 
 =head2 setup(%)
 
+Set up connection info.
 
-=head2 load_defined_schemas()
+ARGUMENTS
+
+  dsn: Datasource. SCALAR
+  username: connect username. SCALAR
+  password: connect password. SCALAR
+  connect_options: connect options. HASHREF
+
+RETURNS : nothing
+
+EXAMPLE
+
+  use DBIx::Thin;
+  DBIx::Thin->setup(
+      dsn => 'DBI:SQLite:dbname=your_project.sqlite3',
+      connect_options => {
+          RaiseError => 1
+      }
+  );
+  
+  OR
+  
+  use DBIx::Thin setup => {
+      dsn => 'DBI:SQLite:dbname=your_project.sqlite3',
+      connect_options => {
+          RaiseError => 1
+      }
+  };
+
+
+=head2 load_defined_schemas(%)
 
 Loads all defined schemas automatically.
-After calling load_defined_schemas, you don't need to use your schema class like 'use Your::Model::User'.
+After calling load_defined_schemas,
+you don't need to use your schema class like 'use Your::Model::User'.
+
+ARGUMENTS
+  
+  schema_directory : directory of schema modules you created. If not given, try to find caller's package directory.
+
+EXAMPLE
+
+  use DBIx::Thin;
+  DBIx::Thin->setup(...);
+  DBIx::Thin->load_defined_schemas();
+  
+  OR
+  
+  DBIx::Thin->load_defined_schemas('another/lib/Your/Model');
+
 
 =head2 new(%args)
 
 Creates an instance of DBIx::Thin.
+You shouldn't call DBIx::Thin's new method directly.
+Instead, you call Your::Model's one
 
 ARGUMENTS
 
-  dsn: Datasource
-  username: connect username
-  password: connect password
-  connect_options: connect options
+  dsn: Datasource. SCALAR
+  username: connect username. SCALAR
+  password: connect password. SCALAR
+  connect_options: connect options. HASHREF
 
 EXAMPLE
 
   use Carp ();
   use Your::Model;
   
-  my $model = Your::Model->new({
+  my $model = Your::Model->new(
       dsn => 'DBI:mysql:yourdb:localhost',
       username => 'root',
       password => 'your password',
       connect_options => {
+          RaiseError => 1,
           HandleError => sub { Carp::croak(shift) },
        },
-  });
+  );
 
 
 =head2 execute_select($sql, $bind)
@@ -924,10 +986,10 @@ ARGUMENTS
 
   args : HASH
     sql : SQL
-    bind : bind parameters. (ARRAYREF)
-    options : options. (HASHREF)
-      utf8 : extra utf8 columns (ARRAYREF)
-      inflate : extra inflate columns (HASHREF)
+    bind : bind parameters. ARRAYREF
+    options : options. HASHREF
+      utf8 : extra utf8 columns ARRAYREF
+      inflate : extra inflate columns HASHREF
 
 RETURNS : A row object for the table. if no records, returns undef.
 
@@ -951,7 +1013,7 @@ ARGUMENTS
 
   table : Table name for searching
   args : HASH
-    select : select columns. (ARRAYREF)
+    select : select columns. ARRAYREF
     where : HASHREF
     order_by : ARRAYREF or HASHREF
     having : HAVING
@@ -996,8 +1058,8 @@ ARGUMENTS
     bind : bind parameters. ARRAYREF
     options : HASHREF
       table : Table for selection (used for determining a mapped object)
-      utf8 : extra utf8 columns (ARRAYREF)
-      inflate : extra inflate columns (HASHREF)
+      utf8 : extra utf8 columns. ARRAYREF
+      inflate : extra inflate columns. HASHREF
 
 RETURNS : In scalar context, an iterator(L<DBIx::Thin::Iterator>) of row objects for the SQL. if no records, returns an empty iterator. (NOT undef)  In list context, an array of row objects.
 
