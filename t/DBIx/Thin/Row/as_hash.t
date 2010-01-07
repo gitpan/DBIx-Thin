@@ -7,10 +7,9 @@ use Data::Dumper;
 use Your::Model;
 
 my $model = Your::Model->new;
-my $name = 'row-delete-' . $$;
 my %values = (
-    name => $name,
-    email => 'row@hoge.com',
+    name => 'row-as_hash',
+    email => 'oinume@hoge.com',
     created_at => '2009-09-01 12:00:00',
 );
 
@@ -21,13 +20,10 @@ Your::Model->create(
 
 my $user = Your::Model->find(
     'user',
-    where => { name => $name },
+    where => { name => 'row-as_hash' },
 );
-$user->delete;
+my %hash = $user->as_hash;
 
-my $user2 = Your::Model->find(
-    'user',
-    where => { name => $name },
-);
+is($hash{created_at}, $user->created_at, 'as_hash');
 
-ok(!$user2, 'delete');
+

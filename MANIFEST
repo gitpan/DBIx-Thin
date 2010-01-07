@@ -37,6 +37,7 @@ README
 script/thin-generate-schema.pl
 t/create_tables_mysql.sql
 t/create_tables_sqlite3.sql
+t/DBIx/Thin/000_create_table.t
 t/DBIx/Thin/001_compile.t
 t/DBIx/Thin/002_new.t
 t/DBIx/Thin/003_load_defined_schemas.t
@@ -62,6 +63,7 @@ t/DBIx/Thin/Iterator/Arrayref/all.t
 t/DBIx/Thin/Profiler/all.t
 t/DBIx/Thin/Row/accessor.t
 t/DBIx/Thin/Row/all.t
+t/DBIx/Thin/Row/as_hash.t
 t/DBIx/Thin/Row/delete.t
 t/DBIx/Thin/Row/update.t
 t/DBIx/Thin/Schema/all.t

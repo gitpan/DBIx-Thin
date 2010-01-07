@@ -24,10 +24,8 @@ no_index:
 requires:
   Class::Accessor: 0.25
   DBI: 1.38
-  File::Basename: 0
-  File::Spec: 0
   UNIVERSAL::require: 0
   perl: 5.005
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.04
+version: 0.05
